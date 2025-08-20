@@ -41,3 +41,7 @@ models:
       +materialized: view
     marts:
       +materialized: table
+
+  snowflake_spend:
+      +enabled: true # option true par défaut
+
