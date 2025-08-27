@@ -1,9 +1,6 @@
 {{
     config(
-        materialized='incremental',
-        unique_key = 'order_id',
-        incremental_strategy = 'merge',
-        on_schema_change='fail'
+        materialized='incremental'
     )
 }}
 
@@ -35,7 +32,7 @@ order_payments as (
     from orders
     left join order_payments using (order_id)
 )
- 
+
 select * from final
 {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
