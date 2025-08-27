@@ -13,7 +13,7 @@ pivoted as (
             ,
         {% endif %}
 
-        {%- endfor -%}
+        {%- endfor %}
     from payments
     where status = 'success'
     group by 1
