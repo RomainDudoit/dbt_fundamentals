@@ -1,0 +1,33 @@
+semantic_models:
+  - name: sem_fct_orders
+    model: ref('fct_orders')
+    defaults:
+      agg_time_dimension: order_date
+    entities: 
+      - name: order_id
+        type: primary
+      - name : customer_id
+        type : foreign
+    dimensions:
+      - name: order_date
+        type: time
+        type_params:
+          time_granularity : day
+
+metrics:
+      - name: "order_total"
+        label: "order_total"
+        description: "Sum of orders value"
+        type: simple
+        type_params:
+          measure:
+            name: amount
+
+      - name: "large_orders"
+        description: "Count of orders with order total over 20"
+        label: "Large Orders"
+        type: simple
+        type_params:
+          measure:
+            name: amount
+
