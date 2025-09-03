@@ -1,0 +1,47 @@
+models:
+  - name: fct_orders
+    description: Order overview data mart
+    data_tests:
+    - dbt_utils.expression_is_true:
+       expression: "order_items_subtotal = subtotal"
+    columns:
+      - name: order_id
+        description: The unique key of the orders mart.
+        data_tests:
+          - not_null
+          - unique
+          
+      - name: customer_id
+        description: The foreign key relating to the customer who placed the order.
+        data_tests:
+          - relationships:
+              field: customer_id
+              to: ref('stg_jaffle_shop_customers')
+          
+      - name: amount
+        description: rounded dollar amount of order
+        data_tests:
+          - dbt_utils.expression_is_true:
+              expression: "<=5"
+              config:
+                #severity: warn
+                error_if: ">=100"
+                #where: "ordered_at = current_date"
+                #limit: 5
+                store_failures: true
+
+          #- greater_than_five
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0  # (Optional)
+              max_value: 100 # (Optional)
+              #row_condition: "id is not null" # (Optional)
+              strictly: false # (Optional. Default is 'false'. Adds an 'or equal to' to the comparison operator for min/max)
+          - assert_dollars_spent_are_greater_than_one
+      
+      - name: order_total
+        description: the total amount of the order in USD inclunding tax
+
+      - name: ordered_at
+        description: the timestamp the order was placed at
+
+  

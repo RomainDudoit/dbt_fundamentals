@@ -9,6 +9,11 @@ models:
         tests:
           - unique
           - not_null
+          - dbt_utils.cardinality_equality: 
+              arguments:
+                field: customer_id
+                to: ref('stg_jaffle_shop_customers') # attention a faire en sorte que le model référencé existe bien, sinon pas de waring ou erreur 
+
 
   - name: stg_jaffle_shop_orders
     description: This model cleans up order data, one order per row
