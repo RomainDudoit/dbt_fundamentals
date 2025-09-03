@@ -24,7 +24,6 @@ def model(dbt, session):
 
     return df
 
-    #select * from {{ref('is_holiday_2024')}} where is_holiday : to test on another model
     #____________________________________________________________________
 
     # apply our function

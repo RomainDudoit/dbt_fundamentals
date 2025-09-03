@@ -14,7 +14,7 @@ sources:
         columns:
           - name: id
             description: primary key for customers data
-            tests:
+            data_tests:
               - unique
               - not_null
 
@@ -27,6 +27,6 @@ sources:
             error_after: { count: 60, period: day }
         columns:
           - name: id
-            tests:
+            data_tests:
               - unique
               - not_null
